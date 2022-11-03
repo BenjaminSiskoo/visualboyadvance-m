@@ -6,6 +6,8 @@
   - [Building](#building)
   - [Building a Libretro core](#building-a-libretro-core)
   - [Visual Studio Support](#visual-studio-support)
+  - [Visual Studio Code Support](#visual-studio-code-support)
+    - [Optional: clangd](#optional-clangd)
   - [Dependencies](#dependencies)
   - [Cross compiling for 32 bit on a 64 bit host](#cross-compiling-for-32-bit-on-a-64-bit-host)
   - [Cross Compiling for Win32](#cross-compiling-for-win32)
@@ -108,6 +110,40 @@ cd build
 cmake .. -DVCPKG_TARGET_TRIPLET=x64-windows-static -DCMAKE_BUILD_TYPE=Debug -G Ninja
 ninja
 ```
+
+## Visual Studio Code Support
+
+On most platforms, Visual Studio Code should work as-is, as long as the
+[CMake Tools extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
+is installed.
+
+There is a recommended configuration in the `vscode/` folder. To use it, copy
+the folder to `.vscode/`:
+
+```shell
+cp vscode/ .vscode/
+```
+
+The recommended configuration produces binaries in sub-directories of the
+`build/` folder, allowing to easily change configuration without overridding
+other builds.
+
+### Optional: clangd
+
+The [clangd extension](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)
+uses clangd to provide powerful code completion, errors and warnings and
+references on click in VS Code.
+
+With the recommended configuration, the build configuration will generate a
+`compile_commands.json` file that can be used with clangd. After configuration,
+you can copy that file to the root directory with a command similar to this one:
+
+```shell
+cp build/x64-linux-elf-glibc-11.3.0/debug-static/compile_commands.json .
+```
+
+Then, select "clangd: Restart language server" from the command palette to get
+completion in the IDE.
 
 ## Dependencies
 
